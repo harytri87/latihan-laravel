@@ -1,0 +1,1 @@
+<div {{ $attributes(['class' => 'border-b border-laravel']) }}></div>

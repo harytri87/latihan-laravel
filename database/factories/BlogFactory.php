@@ -27,7 +27,7 @@ class BlogFactory extends Factory
             'user_id' => $user,
             'title' => $title,
             'slug' => $slug,
-            'body' => fake()->realText(300),
+            'body' => fake()->realText(3000),
         ];
     }
 }
