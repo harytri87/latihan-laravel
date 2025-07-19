@@ -6,6 +6,6 @@
 	<div>
 		{{ $slot }}
 
-		<x-forms.error />
+		<x-forms.error :error="$errors->first($name)"/>
 	</div>
 </div>

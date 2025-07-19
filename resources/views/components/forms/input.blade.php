@@ -6,7 +6,7 @@
 		'id' => $name,
 		'name' => $name,
 		'class' => 'w-full px-3 py-2 border border-gray-400 focus:outline-none focus:border-laravel rounded',
-		'value' => ''
+        'value' => old($name)
 	];
 @endphp
 

@@ -27,10 +27,23 @@
 				<input type="text" placeholder="Cari blog..." class="w-full px-4 py-1 border border-gray-400 focus:outline-none focus:border-laravel rounded">
 			</form>
 
-			<div class="space-x-6 font-bold">
-				<a href="/register">Daftar</a>
-				<a href="/login">Masuk</a>
-			</div>
+			@auth
+				<div class="space-x-6 font-bold flex">
+					<form method="POST" action="/logout">
+						@csrf
+						@method('DELETE')
+
+						<button class="cursor-pointer">Log Out</button>
+					</form>
+				</div>
+			@endauth
+
+			@guest
+				<div class="space-x-6 font-bold">
+					<a href="{{ route('register') }}">Daftar</a>
+					<a href="{{ route('login') }}">Masuk</a>
+				</div>
+			@endguest
 		</nav>
 	</header>
 

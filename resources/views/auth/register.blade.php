@@ -1,7 +1,8 @@
 <x-layout>
 	<h1 class="font-bold text-center text-4xl mb-8">Buat Akun Baru</h1>
 
-	<x-forms.form action="#">
+	<x-forms.form method="POST" action="{{ route('register') }}" enctype="multipart/form-data">
+		@csrf
 		<x-forms.input label="Nama" name="name" />
 		<x-forms.input label="Username" name="username" />
 		<x-forms.input label="Email" name="email" type="email" />
@@ -12,7 +13,7 @@
 		<div class="flex flex-wrap justify-between items-center">
 			<x-forms.link href="/login">Sudah punya akun?</x-forms.link>
 
-			<x-forms.button>Daftar</x-forms.button>
+			<x-forms.button type="submit">Daftar</x-forms.button>
 		</div>
 	</x-forms.form>
 </x-layout>

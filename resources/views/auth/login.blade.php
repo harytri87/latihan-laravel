@@ -1,7 +1,8 @@
 <x-layout>
 	<h1 class="font-bold text-center text-4xl mb-8">Masuk</h1>
 
-	<x-forms.form action="#">
+	<x-forms.form method="POST" action="{{ route('login') }}">
+		@csrf
 		<x-forms.input label="Email" name="email" type="email" />
 		<x-forms.input label="Kata Sandi" name="password" type="password" />
 
