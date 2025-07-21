@@ -1,67 +1,58 @@
 <x-layout>
 	<x-article-panel>
 		<h1 class="font-bold text-4xl mb-2 tracking-wide">
-			Ini Judul Blog yang Sangat Menarik
+			{{ $blog->title }}
 		</h1>
 
 		<div class="text-tulisan">
 			<span class="pr-1 mr-1 font-light text-sm border-r">
-				<a href="#author" class="underline hover:text-laravel">
-					Oleh Pengarang Handal
+				<a href="#{{ $blog->user->username }}" class="underline hover:text-laravel">
+					Oleh {{ $blog->user->name }}
 				</a>
 			</span>
 
 			<time class="font-light text-sm">
-				09:45 21 Mei 2025
+				{{ $blog->formatted_created_at }}
 			</time>
 		</div>
 
 		<x-divider class="mt-3 mb-6" />
 
 		<div class="space-y-3">
-			<p>
-				Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate eveniet facilis temporibus maiores aperiam autem sunt est in impedit sint dignissimos corporis ex, corrupti tempore. Aliquid dolorum aliquam eius ratione?
-			</p>
-
-			<p>
-				Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum doloribus alias veritatis enim libero nesciunt ducimus tenetur aut numquam vitae quo blanditiis qui earum ex eligendi voluptate, delectus expedita laudantium.
-			</p>
-
-			<p>
-				Lorem ipsum dolor, sit amet consectetur adipisicing elit. Impedit consectetur expedita inventore, repellendus deserunt architecto voluptatibus adipisci, similique dolor cupiditate reiciendis ullam eum animi fuga reprehenderit saepe velit repellat minus!
-			</p>
-
-			<p>
-				Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate eveniet facilis temporibus maiores aperiam autem sunt est in impedit sint dignissimos corporis ex, corrupti tempore. Aliquid dolorum aliquam eius ratione?
-			</p>
-
-			<p>
-				Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum doloribus alias veritatis enim libero nesciunt ducimus tenetur aut numquam vitae quo blanditiis qui earum ex eligendi voluptate, delectus expedita laudantium.
-			</p>
-
-			<p>
-				Lorem ipsum dolor, sit amet consectetur adipisicing elit. Impedit consectetur expedita inventore, repellendus deserunt architecto voluptatibus adipisci, similique dolor cupiditate reiciendis ullam eum animi fuga reprehenderit saepe velit repellat minus!
-			</p>
-			
-			<p>
-				Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate eveniet facilis temporibus maiores aperiam autem sunt est in impedit sint dignissimos corporis ex, corrupti tempore. Aliquid dolorum aliquam eius ratione?
-			</p>
-
-			<p>
-				Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum doloribus alias veritatis enim libero nesciunt ducimus tenetur aut numquam vitae quo blanditiis qui earum ex eligendi voluptate, delectus expedita laudantium.
-			</p>
-
-			<p>
-				Lorem ipsum dolor, sit amet consectetur adipisicing elit. Impedit consectetur expedita inventore, repellendus deserunt architecto voluptatibus adipisci, similique dolor cupiditate reiciendis ullam eum animi fuga reprehenderit saepe velit repellat minus!
-			</p>
+			{!! nl2br(e($blog->body)) !!}
+			{{-- Cek route contoh-string aja biar ngerti --}}
 		</div>
 
 		<x-divider class="mt-6 mb-3" />
 
 		<div class="items-center space-x-1">
-			<x-tag tag="Info Menarik" size="small" />
-			<x-tag tag="Travel" size="small" />
-			<x-tag tag="Hobi" size="small" />
+			@foreach ($blog->tags as $tag)
+				<x-tag :$tag size="small" />
+			@endforeach
 		</div>
 	</x-article-panel>
+
+	@can('edit-destroy-blog', $blog)
+		<div class="flex justify-end gap-3 pt-4">
+			<a
+				href="{{ route('blogs.edit', $blog) }}"
+				class="bg-laravel hover:bg-laravel/85 py-[0.6rem] px-6 text-antique-white font-bold rounded"
+			>
+				Sunting
+			</a>
+
+			<x-forms.button
+				form="delete-form"
+				bg="custom"
+				class="bg-red-600 hover:bg-red-600/85 cursor-pointer"
+			>
+				Hapus
+			</x-forms.button>
+		</div>
+
+		<form method="POST" action="{{ route('blogs.destroy', $blog) }}" id="delete-form" class="hidden">
+			@csrf
+			@method('DELETE')
+		</form>
+	@endcan
 </x-layout>

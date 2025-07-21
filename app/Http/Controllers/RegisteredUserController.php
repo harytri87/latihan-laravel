@@ -22,7 +22,7 @@ class RegisteredUserController extends Controller
             'username' => ['required', 'min:4', 'max:50', 'unique:'.User::class],
             'email' => ['required', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Password::min(6)],
-            'picture' => [File::types(['png', 'jpg', 'webp'])->max(5 * 1024)],
+            'picture' => ['nullable', File::types(['png', 'jpg', 'webp'])->max(5 * 1024)],
         ]);
 
         if ($request->has('picture')) {

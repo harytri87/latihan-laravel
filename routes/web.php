@@ -1,23 +1,29 @@
 <?php
 
+use App\Http\Controllers\BlogController;
 use App\Http\Controllers\RegisteredUserController;
 use App\Http\Controllers\SessionController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-	return view('blogs.index');
-})->name('home');
+Route::controller(BlogController::class)->group(function () {
+	// Bisa diakses semua orang
+	Route::get('/', 'index')->name('home');
+	Route::get('blogs', 'index')->name('home');
 
-Route::get('/blogs', function () {
-	return view('blogs.show');
-});
+	// Biar penamaan lebih simple. Tapi kalo sekiranya terlalu banyak nested, bisa dihapus aja, manual kasih nama yg lengkap
+	Route::name('blogs.')->group(function () {
+		// Urutannya harus gini, jadi middleware authnya masing-masing
+		Route::get('blogs/create', 'create')->middleware('auth')->name('create');
+		Route::get('blogs/{blog:slug}', 'show')->name('show');
+		Route::post('blogs', 'store')->name('store')->middleware('auth');
 
-Route::get('/blogs/create', function () {
-	return view('blogs.create');
-});
-
-Route::get('/blogs/edit', function () {
-	return view('blogs.edit');
+		// Harus login & bener yg punya blognya aja
+		Route::middleware('auth', 'can:edit-destroy-blog,blog')->group(function () {
+			Route::get('blogs/{blog:slug}/edit', 'edit')->name('edit');
+			Route::patch('blogs/{blog}', 'update')->name('update');
+			Route::delete('blogs/{blog}', 'destroy')->name('destroy');
+		});
+	});
 });
 
 Route::middleware('guest')->group(function () {
@@ -32,6 +38,11 @@ Route::middleware('guest')->group(function () {
 	Route::post('login', [SessionController::class, 'store']);
 });
 
-Route::delete('/logout', [SessionController::class, 'destroy'])
+Route::delete('logout', [SessionController::class, 'destroy'])
 	->middleware('auth')
 	->name('logout');
+
+
+Route::get('contoh-string', function () {
+	return view('contoh');
+});

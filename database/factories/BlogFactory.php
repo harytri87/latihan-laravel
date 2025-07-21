@@ -28,6 +28,7 @@ class BlogFactory extends Factory
             'title' => $title,
             'slug' => $slug,
             'body' => fake()->realText(3000),
+            'created_at' => fake()->dateTimeBetween('-3 month', '0 day'),
         ];
     }
 }

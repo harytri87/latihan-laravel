@@ -3,11 +3,11 @@
 
 	<x-forms.form method="POST" action="{{ route('login') }}">
 		@csrf
-		<x-forms.input label="Email" name="email" type="email" />
-		<x-forms.input label="Kata Sandi" name="password" type="password" />
+		<x-forms.input label="Email" name="email" type="email" required />
+		<x-forms.input label="Kata Sandi" name="password" type="password" required />
 
 		<div class="flex flex-wrap justify-between items-center">
-			<x-forms.link href="/register">Belum punya akun?</x-forms.link>
+			<x-forms.link href="{{ route('register') }}">Belum punya akun?</x-forms.link>
 
 			<x-forms.button>Masuk</x-forms.button>
 		</div>

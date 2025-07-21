@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Support\Str;
 
 class Blog extends Model
 {
@@ -19,6 +20,13 @@ class Blog extends Model
         'body'
     ];
 
+    public function tag(String $slug): void
+    {
+        $tag = Tag::where(['slug' => $slug])->first();
+        
+        $this->tags()->attach($tag);
+    }
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
@@ -27,5 +35,22 @@ class Blog extends Model
     public function tags(): BelongsToMany
     {
         return $this->belongsToMany(Tag::class);
+    }
+
+    public function setTitleAttribute($value) {
+        $normalizedTitle = preg_replace('/\s+/', ' ', trim($value));
+        $this->attributes['title'] = $normalizedTitle;
+        $this->attributes['slug'] = Str::slug($normalizedTitle);
+    }
+
+    public function getExcerptAttribute()
+    {
+        return Str::words(strip_tags($this->body), 50, '...');
+    }
+
+    public function getFormattedCreatedAtAttribute()
+    {
+        // Nama bulan sesuai bahasa di locale .env
+        return $this->created_at->translatedFormat('H:i, j F Y');
     }
 }

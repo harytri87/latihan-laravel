@@ -3,15 +3,15 @@
 
 	<x-forms.form method="POST" action="{{ route('register') }}" enctype="multipart/form-data">
 		@csrf
-		<x-forms.input label="Nama" name="name" />
-		<x-forms.input label="Username" name="username" />
-		<x-forms.input label="Email" name="email" type="email" />
-		<x-forms.input label="Kata Sandi" name="password" type="password" />
-		<x-forms.input label="Ulangi Kata Sandi" name="password_confirmation" type="password" />
+		<x-forms.input label="Nama" name="name" required />
+		<x-forms.input label="Username" name="username" required />
+		<x-forms.input label="Email" name="email" type="email" required />
+		<x-forms.input label="Kata Sandi" name="password" type="password" required />
+		<x-forms.input label="Ulangi Kata Sandi" name="password_confirmation" type="password" required />
 		<x-forms.input label="Foto Profil" name="picture" type="file" />
 
 		<div class="flex flex-wrap justify-between items-center">
-			<x-forms.link href="/login">Sudah punya akun?</x-forms.link>
+			<x-forms.link href="{{ route('login') }}">Sudah punya akun?</x-forms.link>
 
 			<x-forms.button type="submit">Daftar</x-forms.button>
 		</div>
