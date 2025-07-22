@@ -4,17 +4,11 @@
 			{{ $blog->title }}
 		</h1>
 
-		<div class="text-tulisan">
-			<span class="pr-1 mr-1 font-light text-sm border-r">
-				<a href="#{{ $blog->user->username }}" class="underline hover:text-laravel">
-					Oleh {{ $blog->user->name }}
-				</a>
-			</span>
-
-			<time class="font-light text-sm">
-				{{ $blog->formatted_created_at }}
-			</time>
-		</div>
+		<x-blog-info
+			name="{{ $blog->user->name }}"
+			username="{{ $blog->user->username }}"
+			date="{{ $blog->formatted_created_at }}"
+		/>
 
 		<x-divider class="mt-3 mb-6" />
 
@@ -32,8 +26,16 @@
 		</div>
 	</x-article-panel>
 
-	@can('edit-destroy-blog', $blog)
-		<div class="flex justify-end gap-3 pt-4">
+
+	<div class="flex justify-end gap-3 pt-4">
+		<a
+			href="{{ route('home') }}"
+			class="bg-laravel hover:bg-laravel/85 py-[0.6rem] px-6 text-antique-white font-bold rounded"
+		>
+			Kembali
+		</a>
+
+		@can('edit-destroy-blog', $blog)
 			<a
 				href="{{ route('blogs.edit', $blog) }}"
 				class="bg-laravel hover:bg-laravel/85 py-[0.6rem] px-6 text-antique-white font-bold rounded"
@@ -48,8 +50,9 @@
 			>
 				Hapus
 			</x-forms.button>
-		</div>
-
+		@endcan
+	</div>
+	@can('edit-destroy-blog', $blog)
 		<form method="POST" action="{{ route('blogs.destroy', $blog) }}" id="delete-form" class="hidden">
 			@csrf
 			@method('DELETE')

@@ -5,18 +5,16 @@
 		<div>
 			<h3 class="font-bold text-xl tracking-wide">
 				<a href="{{ route('blogs.show', $blog->slug) }}">
-					<span class="absolute inset-0"></span>
+					{{-- <span class="absolute inset-0"></span> --}}
 					{{ $blog->title }}
 				</a>
 			</h3>
 
-			<span class="pr-1 mr-1 font-light text-tulisan text-sm border-r">
-				Oleh {{ $blog->user->name }}
-			</span>
-
-			<time class="font-light text-tulisan text-sm">
-				{{ $blog->formatted_created_at }}
-			</time>
+			<x-blog-info
+				name="{{ $blog->user->name }}"
+				username="{{ $blog->user->username }}"
+				date="{{ $blog->formatted_created_at }}"
+			/>
 		</div>
 
 		<div class="items-center space-x-1">
@@ -30,6 +28,10 @@
 
 	<p>
 		{{ $blog->excerpt }}
-		<span class="font-light text-raisin-black/70">[baca selengkapnya]</span>
+		<span class="font-light text-raisin-black/70">
+			<a href="{{ route('blogs.show', $blog->slug) }}">
+				[baca selengkapnya]
+			</a>
+		</span>
 	</p>
 </x-article-panel>

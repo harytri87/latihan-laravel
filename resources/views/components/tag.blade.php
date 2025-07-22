@@ -12,4 +12,4 @@
 	}
 @endphp
 
-<a href="/tags/{{ $tag->slug }}" class="{{ $classes }}">{{ $tag->name }}</a>
+<a href="{{ route('blogs.search', ['t' => $tag->slug]) }}" class="{{ $classes }}">{{ $tag->name }}</a>

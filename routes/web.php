@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\RegisteredUserController;
+use App\Http\Controllers\SearchController;
 use App\Http\Controllers\SessionController;
 use Illuminate\Support\Facades\Route;
 
@@ -25,6 +26,8 @@ Route::controller(BlogController::class)->group(function () {
 		});
 	});
 });
+
+Route::get('search', SearchController::class)->name('blogs.search');
 
 Route::middleware('guest')->group(function () {
 	Route::get('register', [RegisteredUserController::class, 'create'])
