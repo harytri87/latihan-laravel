@@ -1,4 +1,8 @@
 <x-layout>
+	@if (session('status') !== null)
+		<x-status-notif class="mb-6" info="{{ session('info') }}">{{ session('msg') }}</x-status-notif>
+	@endif
+
 	<x-article-panel>
 		<h1 class="font-bold text-4xl mb-2 tracking-wide">
 			{{ $blog->title }}
@@ -43,19 +47,9 @@
 				Sunting
 			</a>
 
-			<x-forms.button
-				form="delete-form"
-				bg="custom"
-				class="bg-red-600 hover:bg-red-600/85 cursor-pointer"
-			>
+			<x-forms.delete-confirmation route="blogs.destroy" :data="$blog">
 				Hapus
-			</x-forms.button>
+			</x-forms.delete-confirmation>
 		@endcan
 	</div>
-	@can('edit-destroy-blog', $blog)
-		<form method="POST" action="{{ route('blogs.destroy', $blog) }}" id="delete-form" class="hidden">
-			@csrf
-			@method('DELETE')
-		</form>
-	@endcan
 </x-layout>

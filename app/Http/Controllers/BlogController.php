@@ -50,7 +50,11 @@ class BlogController extends Controller
             $blog->tag($tag);
         }
 
-        return redirect()->route('blogs.show', $blog);
+        return redirect()->route('blogs.show', $blog)->with([
+            'status' => 'blog-stored',
+            'info' => 'success',
+            'msg' => 'Blog berhasil dibuat.'
+        ]);
     }
 
     /**
@@ -93,7 +97,11 @@ class BlogController extends Controller
 
         $blog->tags()->sync($tagIds);
 
-        return redirect()->route('blogs.show', $blog);
+        return redirect()->route('blogs.show', $blog)->with([
+            'status' => 'blog-updated',
+            'info' => 'success',
+            'msg' => 'Blog berhasil disunting.'
+        ]);
     }
 
     /**
@@ -104,6 +112,10 @@ class BlogController extends Controller
         $blog->delete();
 
 		// redirect
-		return redirect()->route('home');
+		return redirect()->route('home')->with([
+            'status' => 'blog-destroyed',
+            'info' => 'alert',
+            'msg' => 'Blog berhasil dihapus.'
+        ]);
     }
 }

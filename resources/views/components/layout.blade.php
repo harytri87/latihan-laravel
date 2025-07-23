@@ -20,7 +20,7 @@
 
 <body class="min-h-screen bg-utama text-raisin-black tracking-[0.01em]">
 	<header>
-		<nav class="flex px-6 py-2 justify-between items-center border-b border-laravel">
+		<nav class="flex flex-wrap sm:flex-nowrap px-2 md:px-6 py-2 justify-between items-center gap-2 border-b border-laravel">
 			<a href="/">
 				<img class="h-10" src="{{ asset('images/LaravelLogo.svg') }}" alt="logo">
 			</a>
@@ -39,7 +39,7 @@
 			</form>
 
 			@auth
-				<div class="space-x-6 font-bold flex">
+				<div class="flex flex-wrap justify-end space-x-6 space-y-2 font-bold">
 					<a href="{{ route('blogs.create') }}">Tulis Blog</a>
 
 					<details class="relative inline-block">
@@ -52,7 +52,8 @@
 						</summary>
 
 						<div class="absolute right-0 mt-2 w-40 rounded-md bg-white shadow-lg ring-1 ring-raisin-black ring-opacity-5 z-10">
-							<a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" href="#">Pengaturan</a>
+							<a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+								href="{{ route('profile.edit') }}">Pengaturan</a>
 
 							<form class="relative block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" method="POST" action="{{ route('logout') }}">
 								@csrf
@@ -69,7 +70,7 @@
 			@endauth
 
 			@guest
-				<div class="space-x-6 font-bold">
+				<div class="flex flex-wrap justify-end space-x-6 space-y-2 font-bold">
 					<a href="{{ route('register') }}">Daftar</a>
 					<a href="{{ route('login') }}">Masuk</a>
 				</div>

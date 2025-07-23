@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RegisteredUserController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\SessionController;
@@ -28,6 +29,16 @@ Route::controller(BlogController::class)->group(function () {
 });
 
 Route::get('search', SearchController::class)->name('blogs.search');
+
+/**
+ * Route gini mastiin user yg login cuma bisa ngakses profilnya sendiri.
+ * Jadi ga ada gate tambahan kayak blog
+ */
+Route::middleware('auth')->group(function () {
+    Route::get('profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
 
 Route::middleware('guest')->group(function () {
 	Route::get('register', [RegisteredUserController::class, 'create'])
