@@ -11,7 +11,11 @@
 
 		<form
 			method="POST"
-			action="{{ route($route, $data ?? '') }}"
+			@if ($data !== null)
+				action="{{ route($route, $data) }}"
+			@else
+				action="{{ route($route) }}"
+			@endif
 			class="flex justify-end space-x-3"
 		>
 			@csrf

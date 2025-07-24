@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Mail\UserDeleted;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Mail;
 
 class ProfileController extends Controller
 {
@@ -50,6 +52,11 @@ class ProfileController extends Controller
     {
         $user = $request->user();
 
+        $userData = [
+            'name' => $user->name,
+            'username' => $user->username
+        ];
+
         if ($user->picture !== null) {
             Storage::delete($user->picture);
         }
@@ -60,6 +67,12 @@ class ProfileController extends Controller
 
         $request->session()->invalidate();
         $request->session()->regenerateToken();
+
+        // $user ini ngambil dari memori variable, walau data di tablenya udh dihapus.
+        Mail::to($user)->queue(
+            // Ini harus ngirim dari variable baru, soalnya ga bisa ngakses data yg udh dihapus di table.
+            new UserDeleted($userData)
+        );
 
         return redirect(route('home'))->with([
             'status' => 'profile-destroyed',

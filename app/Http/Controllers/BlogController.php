@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\BlogPosted;
 use App\Models\Blog;
 use App\Models\Tag;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class BlogController extends Controller
 {
@@ -49,6 +51,10 @@ class BlogController extends Controller
         foreach ($attributes['tags'] as $tag) {
             $blog->tag($tag);
         }
+
+        Mail::to($blog->user)->queue(
+            new BlogPosted($blog) // masuk ke __construct di app\Mail\BlogPosted.php
+        );
 
         return redirect()->route('blogs.show', $blog)->with([
             'status' => 'blog-stored',
