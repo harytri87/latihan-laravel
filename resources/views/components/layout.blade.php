@@ -20,12 +20,12 @@
 
 <body class="min-h-screen bg-utama text-raisin-black tracking-[0.01em]">
 	<header>
-		<nav class="flex flex-wrap sm:flex-nowrap px-2 md:px-6 py-2 justify-between items-center gap-2 border-b border-laravel">
+		<nav class="flex flex-wrap sm:flex-nowrap px-2 lg:px-6 py-2 justify-center sm:justify-between items-center gap-2 border-b border-laravel">
 			<a href="/">
 				<img class="h-10" src="{{ asset('images/LaravelLogo.svg') }}" alt="logo">
 			</a>
 
-			<form class="w-full max-w-2xl mx-auto space-y-6" action="{{ route('blogs.search') }}">
+			<form class="w-full max-w-2xl mx-auto" action="{{ route('blogs.search') }}">
 				<input class="w-full px-4 py-1 border border-gray-400 focus:outline-none focus:border-laravel rounded"
 					type="text" name="q" placeholder="Cari blog...">
 					
@@ -39,23 +39,22 @@
 			</form>
 
 			@auth
-				<div class="flex flex-wrap justify-end space-x-6 space-y-2 font-bold">
-					<a href="{{ route('blogs.create') }}">Tulis Blog</a>
+				<div class="flex flex-wrap items-center justify-end gap-8 sm:gap-2 lg:gap-4 font-bold">
+					<div>
+						<a href="{{ route('blogs.create') }}">Tulis Blog</a>
+					</div>
 
-					<details class="relative inline-block">
-						<summary class="cursor-pointer inline-flex items-center justify-center">
-							Profil
-							<svg class="ml-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-								stroke="currentColor">
-								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-							</svg>
+					<details class="relative inline-flex items-center">
+						<summary class="cursor-pointer inline-flex items-center justify-center gap-1">
+							<span>{{ Auth::user()->first_name }}</span>
+							<x-profile-picture :picture="Auth::user()->picture" />
 						</summary>
 
-						<div class="absolute right-0 mt-2 w-40 rounded-md bg-white shadow-lg ring-1 ring-raisin-black ring-opacity-5 z-10">
-							<a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+						<div class="absolute right-0 top-10 w-34 rounded-md bg-white shadow-lg ring-1 ring-raisin-black ring-opacity-5 z-10">
+							<a class="block px-4 py-2 text-sm text-gray-700 rounded-md hover:bg-gray-100"
 								href="{{ route('profile.edit') }}">Pengaturan</a>
 
-							<form class="relative block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" method="POST" action="{{ route('logout') }}">
+							<form class="relative block px-4 py-2 text-sm text-gray-700 rounded-md hover:bg-gray-100" method="POST" action="{{ route('logout') }}">
 								@csrf
 								@method('DELETE')
 
@@ -70,7 +69,7 @@
 			@endauth
 
 			@guest
-				<div class="flex flex-wrap justify-end space-x-6 space-y-2 font-bold">
+				<div class="flex flex-wrap justify-end sm:justify-center lg:justify-end gap-6 sm:gap-3 lg:gap-6 font-bold">
 					<a href="{{ route('register') }}">Daftar</a>
 					<a href="{{ route('login') }}">Masuk</a>
 				</div>

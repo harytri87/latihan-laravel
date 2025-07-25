@@ -14,12 +14,16 @@ class BlogSeeder extends Seeder
      */
     public function run(): void
     {
-        // Ngambil 3 tag random dari yg udh ada di database
-        $tags = Tag::inRandomOrder()->take(3)->get();
+        $allTags = Tag::all();
 
-        // Harus udh ada data user di database. Cek Blog factory.
         Blog::factory(30)
-            ->hasAttached($tags)
-            ->create();
+            ->create()
+            ->each(function ($blog) use ($allTags) {
+              $randomTags = $allTags->random(rand(1, 5));
+
+              $blog->tags()->attach($randomTags);
+            });
+        
+        // setiap blog dapet random 1-5 tag
     }
 }

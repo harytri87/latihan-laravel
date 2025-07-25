@@ -19,7 +19,7 @@
 
 		<x-forms.input label="Kata Sandi" name="password" type="password" />
 		<x-forms.input label="Ulangi Kata Sandi" name="password_confirmation" type="password" />
-		<x-forms.input label="Foto Profil" name="picture" type="file" />
+		<x-forms.input-picture :picture="$user->picture" />
 
 		<x-forms.button type="submit">Ubah</x-forms.button>
 	</x-forms.form>

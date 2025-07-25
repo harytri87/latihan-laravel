@@ -27,10 +27,13 @@ class SearchController extends Controller
 
         if ($user) {
             $blogs->whereBelongsTo($user);
+            $request->session()->flash('authorName', $user->name);
+            $request->session()->flash('profilePic', $user->picture);
         }
 
         if ($tag) {
             $blogs->whereAttachedTo($tag);
+            $request->session()->flash('tagName', $tag->name);
         }
 
         if ($keyword) {
@@ -38,22 +41,18 @@ class SearchController extends Controller
                 $query->where('title', 'LIKE', "%$keyword%")
                       ->orWhere('body', 'LIKE', "%$keyword%");
             });
-
-            // Ini mirip group di CodeIgniter.
-            // Biar orWhere yg paling akhir itu ga ngehapus kondisi semua where sebelumnya
-
-            /**
-             * WHERE (
-             *   user
-             *   AND tag
-             *   AND (
-             *     title OR body
-             *   )
-             * )
-             */
-
-
         }
+        // Ini mirip group di CodeIgniter.
+        // Biar orWhere yg paling akhir itu ga ngehapus kondisi semua where sebelumnya
+        /**
+         * WHERE (
+         *   user
+         *   AND tag
+         *   AND (
+         *     title OR body
+         *   )
+         * )
+         */
 
         $blogs = $blogs->latest()->paginate(10)->appends($request->query());
 
