@@ -16,9 +16,8 @@ class SearchController extends Controller
         $tag = Tag::where('slug', $request->query('t'))->first();
         $user = User::where('username', $request->query('u'))->first();
 
-        $blogs = Blog::with(['user', 'tags']);
-
-        if (($request->query('u') !== null && $user === null) || ($request->query('t') !== null && $tag === null)) {
+        if (($request->query('u') !== null && $user === null) ||
+            ($request->query('t') !== null && $tag === null)) {
             // Kalo user atau tag ga ada di database
             $emptyPaginator = new LengthAwarePaginator([], 0, 10);
 
@@ -26,35 +25,24 @@ class SearchController extends Controller
         }
 
         if ($user) {
-            $blogs->whereBelongsTo($user);
             $request->session()->flash('authorName', $user->name);
             $request->session()->flash('profilePic', $user->picture);
         }
 
         if ($tag) {
-            $blogs->whereAttachedTo($tag);
             $request->session()->flash('tagName', $tag->name);
         }
 
-        if ($keyword) {
-            $blogs->where(function ($query) use ($keyword) {
+        $blogs = Blog::with(['user', 'tags'])
+            ->when($user, fn($q) => $q->whereBelongsTo($user))
+            ->when($tag, fn($q) => $q->whereAttachedTo($tag))
+            ->when($keyword, fn($q) => $q->where(function ($query) use ($keyword) {
                 $query->where('title', 'LIKE', "%$keyword%")
                       ->orWhere('body', 'LIKE', "%$keyword%");
-            });
-        }
-        // Ini mirip group di CodeIgniter.
-        // Biar orWhere yg paling akhir itu ga ngehapus kondisi semua where sebelumnya
-        /**
-         * WHERE (
-         *   user
-         *   AND tag
-         *   AND (
-         *     title OR body
-         *   )
-         * )
-         */
-
-        $blogs = $blogs->latest()->paginate(10)->appends($request->query());
+            }))
+            ->latest()
+            ->paginate(10)
+            ->appends($request->query());
 
         return view('blogs.results', ['blogs' => $blogs]);
     }

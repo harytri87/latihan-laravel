@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Models\Blog;
 use App\Models\User;
+use App\Observers\BlogObserver;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 
@@ -25,5 +26,7 @@ class AppServiceProvider extends ServiceProvider
         Gate::define('edit-destroy-blog', function (User $user, Blog $blog) {
 			return $blog->user->is($user);
 		});
+
+        Blog::observe(BlogObserver::class);
     }
 }

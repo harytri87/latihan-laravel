@@ -17,7 +17,7 @@
 <div id="notif" {{ $attributes->merge(['class' => $classes]) }}>
     <button
 		class="absolute top-0 right-0 flex items-center justify-center m-0 pt-[1px] w-4 h-4 font-light text-2xl hover:text-laravel"
-		onclick="closeNotif()"
+		data-close-modal="notif"
 	>
 		&times;
 	</button>
@@ -25,12 +25,4 @@
     <p>{{ $slot }}</p>
 </div>
 
-<script>
-
-function closeNotif() {
-	const notif = document.getElementById('notif');
-	
-	notif.classList.add('hidden');
-}
-
-</script>
+{{-- Nutupnya pake javascript resources\js\components\modal.js --}}

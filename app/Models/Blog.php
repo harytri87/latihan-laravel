@@ -40,7 +40,6 @@ class Blog extends Model
     public function setTitleAttribute($value) {
         $normalizedTitle = preg_replace('/\s+/', ' ', trim($value));
         $this->attributes['title'] = $normalizedTitle;
-        $this->attributes['slug'] = Str::slug($normalizedTitle);
     }
 
     public function getExcerptAttribute()
