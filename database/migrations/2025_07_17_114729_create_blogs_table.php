@@ -14,12 +14,15 @@ return new class extends Migration
     {
         Schema::create('blogs', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(User::class);
+            $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete();
             $table->string('title');
             $table->string('slug')->unique();
             $table->longText('body');
-
             $table->timestamps();
+
+            $table->index('user_id');
+            $table->index('slug');
+            $table->index('created_at');
         });
     }
 

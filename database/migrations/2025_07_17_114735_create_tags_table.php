@@ -16,8 +16,11 @@ return new class extends Migration
         Schema::create('tags', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique();
-            $table->string('slug')->unique()->after('name');
+            $table->string('slug')->unique();
             $table->timestamps();
+
+            $table->index('name');
+            $table->index('slug');
         });
 
         Schema::create('blog_tag', function (Blueprint $table) {
@@ -25,6 +28,11 @@ return new class extends Migration
             $table->foreignIdFor(Blog::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(Tag::class)->constrained()->cascadeOnDelete();
             $table->timestamps();
+
+            $table->unique(['blog_id', 'tag_id']);
+
+            $table->index('blog_id');
+            $table->index('tag_id');
         });
     }
 
@@ -33,7 +41,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tags');
         Schema::dropIfExists('blog_tag');
+        Schema::dropIfExists('tags');
     }
 };

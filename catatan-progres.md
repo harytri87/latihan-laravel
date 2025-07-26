@@ -277,6 +277,15 @@ Bagusnya javascript dipisah terus dipanggil sama Vite, nanti biar dikompres sama
 
 ---
 
+### Benerin File Migration
+
+File migration aman pas pake SQLite tapi pas nyoba pake MySQL ternyata banyak yg error pas jalanin `php artisan migrate`.
+
+Mau benerin pake file migration baru tapi bingung gara-gara kebanyakan yg errornya.  
+Jadi ngedit file migration yg udh ada aja.
+
+---
+
 ---
 
 ---
