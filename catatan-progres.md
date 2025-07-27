@@ -286,6 +286,15 @@ Jadi ngedit file migration yg udh ada aja.
 
 ---
 
+### Benerin Front-End Fitur Pencarian
+
+Sekarang kalo hasil pencariannya udh ada filter user, pas ngeklik tag, usernya ga ilang, sebaliknya juga.
+
+Sebenernya di bagian back-end udh bisa dari sebelumnya jg, cuma di font-end belum.  
+Sebelumnya harus ngetik manual di bar pencarian browsernya.
+
+---
+
 ---
 
 ---

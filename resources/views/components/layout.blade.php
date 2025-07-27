@@ -25,18 +25,7 @@
 				<img class="h-10" src="{{ asset('images/LaravelLogo.svg') }}" alt="logo">
 			</a>
 
-			<form class="w-full max-w-2xl mx-auto" action="{{ route('blogs.search') }}">
-				<input class="w-full px-4 py-1 border border-gray-400 focus:outline-none focus:border-laravel rounded"
-					type="text" name="q" placeholder="Cari blog...">
-					
-				@if (request('t'))
-					<input type="hidden" name="t" value="{{ request('t') }}">
-				@endif
-
-				@if (request('u'))
-					<input type="hidden" name="u" value="{{ request('u') }}">
-				@endif
-			</form>
+			<x-forms.search />
 
 			@auth
 				<div class="flex flex-wrap items-center justify-end gap-8 sm:gap-2 lg:gap-4 font-bold">

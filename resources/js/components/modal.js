@@ -1,6 +1,6 @@
 export function initModal() {
 	// buka modal
-	document.querySelectorAll('[data-modal-id').forEach(btn => {
+	document.querySelectorAll('[data-modal-id]').forEach(btn => {
 		btn.addEventListener('click', () => {
 			const id = btn.getAttribute('data-modal-id');
 			const modal = document.getElementById(id);
@@ -12,7 +12,7 @@ export function initModal() {
 	});
 
 	// tutup modal
-	document.querySelectorAll('[data-close-modal').forEach(btn => {
+	document.querySelectorAll('[data-close-modal]').forEach(btn => {
 		btn.addEventListener('click', () => {
 			const id = btn.getAttribute('data-close-modal');
 			const modal = document.getElementById(id);
