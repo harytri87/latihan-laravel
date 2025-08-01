@@ -1,14 +1,14 @@
-
+# Option 3: Biarkan nixpacks auto-detect semua
 [phases.install]
 cmds = [
     "composer install --no-dev --optimize-autoloader --no-interaction",
-    "npm ci --only=production",
+    "npm ci",
     "npm run build"
 ]
 
 [phases.build]
 cmds = [
-	"php artisan key:generate --force",
+    "php artisan key:generate --force",
     "php artisan storage:link",
     "php artisan migrate --force",
     "php artisan optimize:clear",
