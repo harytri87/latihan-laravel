@@ -1,0 +1,35 @@
+[phases.setup]
+nixPkgs = [
+    "php82", 
+    "php82Extensions.opcache", 
+    "php82Extensions.pdo", 
+    "php82Extensions.mysqli", 
+    "php82Extensions.curl", 
+    "php82Extensions.gd", 
+    "php82Extensions.mbstring", 
+    "php82Extensions.zip", 
+    "php82Extensions.xml", 
+    "php82Extensions.bcmath", 
+    "php82Extensions.redis", 
+    "composer", 
+    "nodejs-18_x"
+]
+
+[phases.install]
+cmds = [
+    "composer install --no-dev",
+    "npm install",
+    "npm run build"
+]
+
+[phases.build]
+cmds = [
+	"php artisan key:generate --force",
+    "php artisan storage:link",
+    "php artisan migrate --force",
+    "php artisan optimize:clear",
+    "php artisan optimize"
+]
+
+[start]
+cmd = "php artisan serve --host=0.0.0.0 --port=$PORT"
