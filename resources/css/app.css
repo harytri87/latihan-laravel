@@ -17,3 +17,5 @@
     --color-utama: #FDFDFC;
     --color-tulisan: #364153;
 }
+
+@custom-variant dark (&:where(.never-apply-dark));
